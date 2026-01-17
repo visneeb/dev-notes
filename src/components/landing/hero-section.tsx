@@ -14,7 +14,7 @@ export function HeroSection() {
       <div className="relative w-full max-w-md aspect-4/5 overflow-hidden rounded-3xl mx-auto">
         <img
           className="w-full h-full object-cover"
-          src="./src/assets/img/landing-page/mocking-img.jpg"
+          src="./src/assets/img/landing/mocking-img.jpg"
         />
         <div className="absolute inset-0 bg-[rgba(190,186,177,0.25)]"></div>
       </div>
