@@ -1,11 +1,10 @@
 import "./App.css";
-import { NavBar, HeroSection} from "./components/landing-page";
+import HomePage from "./pages/HomePage.tsx";
 
 function App() {
   return (
     <>
-      <NavBar />
-      <HeroSection />
+      <HomePage />
     </>
   );
 }
