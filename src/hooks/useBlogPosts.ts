@@ -1,4 +1,3 @@
-// hooks/useBlogPosts.ts
 import { useState } from "react";
 import axios from "axios";
 
@@ -14,14 +13,21 @@ type Post = {
 
 export function useBlogPosts() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const getPost = async (category?: string) => {
-    const result = await axios.get<{ posts: Post[] }>(
+  const getAllPosts = async (category?: string) => {
+    setLoading(true);
+
+    const res = await axios.get<{ posts: Post[] }>(
       "https://blog-post-project-api.vercel.app/posts",
-      { params: category ? { category } : {} }
+      {
+        params: category ? { category } : {},
+      }
     );
-    setPosts(result.data.posts);
+
+    setPosts(res.data.posts);
+    setLoading(false);
   };
 
-  return { posts, getPost };
+  return { posts, loading, getAllPosts };
 }
