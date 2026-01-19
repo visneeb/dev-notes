@@ -11,7 +11,7 @@ import { Spinner } from "@/components/ui/spinner";
 
 export function ArticleSection() {
   const { posts, loading, getAllPosts } = useBlogPosts();
-  const { visible, paginate, reset } = usePagination(2);
+  const { visible, paginate, reset } = usePagination(6);
   const [selectedCategory, setSelectedCategory] = useState("Highlight");
 
   useEffect(() => {
