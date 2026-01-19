@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-
 @custom-variant dark (&:is(.dark *));
 
 @theme {
@@ -16,8 +15,6 @@
   --color-brand-ligth-green: #d7f2e9;
   --color-brand-red: #eb5164;
 
-  --font-family-sans: "Poppins", sans-serif;
-
   /* Typography Scale */
   --font-size-headline-1: 2.5rem;
   --font-size-headline-2: 2rem;
@@ -29,14 +26,12 @@
 
   --font-weight-headline: 600;
   --font-weight-body: 500;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 /* Utility Classes */
 @layer utilities {
-  .font-poppins {
-    font-family: var(--font-family-sans);
-  }
-
   .text-headline-1 {
     font-size: var(--font-size-headline-1);
     font-weight: var(--font-weight-headline);
@@ -190,4 +185,9 @@
     @apply bg-background text-foreground;
     background-color: #f9f8f6;
   }
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  display: none;
 }

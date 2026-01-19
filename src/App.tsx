@@ -1,12 +1,14 @@
 import "./App.css";
-import { NavBar, HeroSection} from "./components/landing-page";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage.tsx";
 
 function App() {
   return (
-    <>
-      <NavBar />
-      <HeroSection />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
