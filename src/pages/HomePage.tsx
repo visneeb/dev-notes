@@ -1,7 +1,7 @@
-import { NavBar } from "../components/landing/nav-bar.tsx";
-import { HeroSection } from "../components/landing/hero-section.tsx";
-import { Footer } from "../components/landing/footer.tsx";
-import { ArticleSection } from "../components/landing/article-section.tsx";
+import { NavBar } from "@/components/NavBar.tsx";
+import { HeroSection } from "@/components/landing/HeroSection";
+import { Footer } from "@/components/footer.tsx";
+import { ArticleSection } from "@/components/landing/ArticleSection";
 
 function HomePage() {
   return (

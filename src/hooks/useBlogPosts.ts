@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-type Post = {
+export type Post = {
   id: number;
   image: string;
   category: string;
@@ -9,25 +9,47 @@ type Post = {
   description: string;
   author: string;
   date: string;
+  likes: number;
+  content: string;
 };
 
 export function useBlogPosts() {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(false);
 
   const getAllPosts = async (category?: string) => {
-    setLoading(true);
+    try {
+      setLoading(true);
 
-    const res = await axios.get<{ posts: Post[] }>(
-      "https://blog-post-project-api.vercel.app/posts",
-      {
-        params: category ? { category } : {},
-      }
-    );
+      const res = await axios.get<{ posts: Post[] }>(
+        "https://blog-post-project-api.vercel.app/posts",
+        category ? { params: { category } } : undefined,
+      );
 
-    setPosts(res.data.posts);
-    setLoading(false);
+      setPosts(res.data.posts);
+    } catch (error) {
+      console.error("Failed to fetch posts:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  return { posts, loading, getAllPosts };
+  const getPostById = async (id: number | string) => {
+    try {
+      setLoading(true);
+
+      const res = await axios.get<Post>(
+        `https://blog-post-project-api.vercel.app/posts/${id}`,
+      );
+
+      setPost(res.data);
+    } catch (error) {
+      console.error("Failed to fetch post:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { posts, post, loading, getAllPosts, getPostById };
 }

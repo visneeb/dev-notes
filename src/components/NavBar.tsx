@@ -1,4 +1,4 @@
-import { Dropdown } from "../ui/nav-dropdown";
+import { Dropdown } from "./ui/nav-dropdown";
 
 export function NavBar() {
   return (
