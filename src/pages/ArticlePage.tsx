@@ -1,6 +1,6 @@
 import { ArticlePostPage } from "@/components/article-post/ArticlePost";
 import { NavBar } from "@/components/NavBar";
-import { Footer } from "@/components/footer";
+import { Footer } from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 
 function ArticlePage() {
