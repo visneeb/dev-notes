@@ -22,67 +22,74 @@ export default function ShareButtons({ url }: ShareButtonsProps) {
     window.open(shareUrl, "_blank", "noopener,noreferrer");
   };
 
-  const buttonStyle = "bg-brown-100 p-3 rounded-full border border-brown-500";
+  const buttonStyle =
+    "bg-brown-100 px-3 py-3 rounded-full border border-brown-500";
+  const socialButtonStyle =
+    "bg-brown-100 p-3 rounded-full border border-brown-500";
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex justify-between items-center gap-2 ">
       {/* Copy button */}
       <div>
         <button
           onClick={copyLink}
           aria-label="Copy link"
-          className={`${buttonStyle} flex flex-row gap-2 px-6 w-fit`}
+          className={`${buttonStyle} flex flex-row gap-2 px-6 w-fit justify-center items-center`}
         >
-          <Copy className="w-5 h-5" />{" "}
-          <span className="text-body-1 text-brown-600">Copy link</span>
+          <Copy className="w-5 h-5 " />{" "}
+          <span className="text-body-1 text-brown-600 ">
+            Copy link
+          </span>
         </button>
       </div>
 
       {/* Social media share*/}
-      <button
-        type="button"
-        className={buttonStyle}
-        aria-label="Share on Facebook"
-        onClick={() =>
-          openShare(
-            `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-              shareUrl,
-            )}`,
-          )
-        }
-      >
-        <Facebook size={20} />
-      </button>
+      <div className="flex gap-1.5">
+        <button
+          type="button"
+          className={socialButtonStyle}
+          aria-label="Share on Facebook"
+          onClick={() =>
+            openShare(
+              `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                shareUrl,
+              )}`,
+            )
+          }
+        >
+          <Facebook size={20} />
+        </button>
 
-      <button
-        type="button"
-        className={buttonStyle}
-        aria-label="Share on LinkedIn"
-        onClick={() =>
-          openShare(
-            `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-              shareUrl,
-            )}`,
-          )
-        }
-      >
-        <Linkedin className="w-5 h-5" />
-      </button>
+        <button
+          type="button"
+          className={socialButtonStyle}
+          aria-label="Share on LinkedIn"
+          onClick={() =>
+            openShare(
+              `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+                shareUrl,
+              )}`,
+            )
+          }
+        >
+          <Linkedin className="w-5 h-5" />
+        </button>
 
-      <button
-        type="button"
-        className={buttonStyle}
-        aria-label="Share on Twitter"
-        onClick={() =>
-          openShare(
-            `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-              shareUrl,
-            )}`,
-          )
-        }
-      >
-        <Twitter className="w-5 h-5" />
-      </button>
+        <button
+          type="button"
+          className={socialButtonStyle}
+          aria-label="Share on Twitter"
+          onClick={() =>
+            openShare(
+              `https://twitter.com/intent/tweet?url=${encodeURIComponent(
+                shareUrl,
+              )}`,
+            )
+          }
+        >
+          <Twitter className="w-5 h-5" />
+        </button>
+      </div>
     </div>
   );
 }
