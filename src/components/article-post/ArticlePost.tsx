@@ -19,7 +19,7 @@ export function ArticlePostPage() {
   }, [id]);
 
   if (loading) {
-    return Loading();
+    return <Loading />;
   }
 
   if (!post) return <NotFoundPage />;
