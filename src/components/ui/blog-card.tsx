@@ -1,25 +1,30 @@
-export function BlogCard(props: any) {
+import { Link } from "react-router-dom";
 
+export function BlogCard(props: any) {
   return (
     <div className="flex flex-col gap-4">
-      <a href="#" className="relative h-53 sm:h-90">
+      <Link
+        key={props.id}
+        to={`/post/${props.id}`}
+        className="relative h-53 sm:h-90"
+      >
         <img
           className="w-full h-full object-cover rounded-md"
           src={props.image}
           alt={props.title}
         />
-      </a>
+      </Link>
       <div className="flex flex-col">
         <div className="flex">
           <span className="bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-green-600 mb-2">
             {props.category}
           </span>
         </div>
-        <a href="#">
+        <Link key={props.id} to={`/post/${props.id}`}>
           <h2 className="text-start font-bold text-xl mb-2 line-clamp-2 hover:underline h-8">
             {props.title}
           </h2>
-        </a>
+        </Link>
         <p className="text-muted-foreground text-sm mb-4 grow line-clamp-3">
           {props.description}
         </p>

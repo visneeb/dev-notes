@@ -1,16 +1,13 @@
-import { NavBar } from "../components/landing/nav-bar.tsx";
-import { HeroSection } from "../components/landing/hero-section.tsx";
-import { Footer } from "../components/landing/footer.tsx";
-import { ArticleSection } from "../components/landing/article-section.tsx";
+import { Layout } from "@/components/Layout";
+import { HeroSection } from "@/components/landing/HeroSection";
+import { ArticleSection } from "@/components/landing/ArticleSection";
 
 function HomePage() {
   return (
-    <>
-      <NavBar />
+    <Layout>
       <HeroSection />
       <ArticleSection />
-      <Footer />
-    </>
+    </Layout>
   );
 }
 
