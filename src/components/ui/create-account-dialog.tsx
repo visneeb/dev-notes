@@ -45,7 +45,7 @@ export function CreateAccountAlert({
             <p>
               Already have an account?{" "}
               <Link
-                to="/"
+                to="/login"
                 className="underline text-brown-600 hover:text-brown-400"
               >
                 Log in

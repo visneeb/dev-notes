@@ -52,7 +52,6 @@ export function SearchBar({
         <Button
           type="submit"
           variant="ghost"
-          size="icon"
           aria-label="Search"
           className="h-12 w-12 rounded-none  hover:bg-transparent text-brown-600"
         >
