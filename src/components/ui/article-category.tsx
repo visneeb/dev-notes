@@ -66,9 +66,6 @@ export function ArticleCategorySelect({
 /*Categories button*/
 import { Button } from "@/components/ui/button";
 
-const buttonBase =
-  "bg-transparent text-body-1 hover:bg-brown-100 hover:text-brown-500  px-5 py-5";
-
 const buttonActive = "bg-brown-300 text-brown-500 px-5 py-5";
 
 const buttonInactive = "text-brown-400 px-5 py-5";
@@ -86,8 +83,9 @@ export function ArticleButtonGroup({
         return (
           <Button
             key={label}
+            variant="secondary"
             onClick={() => onSelectCategory?.(label)}
-            className={cn(buttonBase, isActive ? buttonActive : buttonInactive)}
+            className={cn( isActive ? buttonActive : buttonInactive)}
           >
             {label}
           </Button>

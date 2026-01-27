@@ -1,5 +1,6 @@
 import { Facebook, Linkedin, Twitter, Copy } from "lucide-react";
 import { showCustomToastError, showCustomToast } from "../ui/custom-toast";
+import { Button } from "@/components/ui/button";
 
 type ShareButtonsProps = {
   url?: string;
@@ -22,25 +23,20 @@ export default function ShareButtons({ url }: ShareButtonsProps) {
     window.open(shareUrl, "_blank", "noopener,noreferrer");
   };
 
-  const buttonStyle =
-    "bg-brown-100 px-3 py-3 rounded-full border border-brown-500";
-  const socialButtonStyle =
-    "bg-brown-100 p-3 rounded-full border border-brown-500";
+  const socialButtonStyle = "bg-white p-3 rounded-full border border-brown-500";
 
   return (
     <div className="flex justify-between items-center gap-2 ">
       {/* Copy button */}
       <div>
-        <button
+        <Button
+          variant="outline"
           onClick={copyLink}
           aria-label="Copy link"
-          className={`${buttonStyle} flex flex-row gap-2 px-6 w-fit justify-center items-center`}
+          className="gap-2"
         >
-          <Copy className="w-5 h-5 " />{" "}
-          <span className="text-body-1 text-brown-600 ">
-            Copy link
-          </span>
-        </button>
+          <Copy className="w-5 h-5 " /> Copy link
+        </Button>
       </div>
 
       {/* Social media share*/}

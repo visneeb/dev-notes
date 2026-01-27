@@ -186,6 +186,7 @@
     @apply bg-background text-foreground;
     background-color: #f9f8f6;
   }
+  
 }
 
 input[type="search"]::-webkit-search-cancel-button {
