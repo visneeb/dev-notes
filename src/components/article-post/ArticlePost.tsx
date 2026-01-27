@@ -25,9 +25,10 @@ export function ArticlePostPage() {
   if (!post) return <NotFoundPage />;
 
   return (
-    <article className="w-full md:px-30 md:py-15">
-      <div>
-        <div className="w-full aspect-1200/587 overflow-hidden pb-6 md:pb-12">
+    <article className="w-full ">
+      <div className="mx-auto max-w-291.25  md:px-4 px-0">
+        {/* image */}
+        <div className="aspect-1200/587 overflow-hidden pb-6 md:pb-12 md:pt-15">
           {post.image && (
             <img
               src={post.image}
@@ -36,7 +37,7 @@ export function ArticlePostPage() {
             />
           )}
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12 lg:gap-20 ">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_310px] gap-12 lg:gap-20 ">
           {/* Article content  */}
           <div className="flex flex-col">
             <div className=" text-gray-500 mb-8 flex gap-5 items-center px-4 md:px-0">
@@ -45,7 +46,9 @@ export function ArticlePostPage() {
               </span>{" "}
               <span className="text-body-1 p-1">{formatDate(post.date)}</span>
             </div>
-            <h2 className="text-headline-2 font-bold mb-4 px-4 md:px-0">{post.title}</h2>
+            <h2 className="text-headline-2 font-bold mb-4 px-4 md:px-0">
+              {post.title}
+            </h2>
 
             <div className="markdown pb-6 px-4 md:px-0">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
@@ -57,9 +60,9 @@ export function ArticlePostPage() {
             <div className="lg:hidden pb-10 px-4 md:px-0">
               <AuthorCard />
             </div>
-            
-              <ArticleMenu like={post.likes} />
-            
+
+            <ArticleMenu like={post.likes} />
+
             <div className="pt-12 px-4 md:px-0">
               <Comment />
             </div>

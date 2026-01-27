@@ -1,6 +1,5 @@
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogTitle,
@@ -8,6 +7,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Link } from "react-router-dom";
 import { X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 type CreateAccountAlertProps = {
   open: boolean;
@@ -23,13 +23,13 @@ export function CreateAccountAlert({
       <AlertDialog open={open} onOpenChange={onOpenChange}>
         <AlertDialogContent className="flex flex-col items-center justify-center px-10">
           <AlertDialogHeader>
-            <AlertDialogCancel className="bg-transparent border-none shadow-none hover:bg-transparent focus:outline-none focus:ring-0 active:bg-transparent absolute right-2 top-2 ">
-              <button aria-label="Close dialog">
-                <X className="w-20 h-20 text-brown-600" strokeWidth={2} />
+            <AlertDialogCancel className="bg-transparent border-none shadow-none hover:bg-transparent focus:outline-none focus:ring-0 active:bg-transparent absolute right-2 top-2 hover:text-brown-300 p-3 ">
+              <button aria-label="Close dialog" className="cursor-pointer ">
+                <X />
               </button>
             </AlertDialogCancel>
             <AlertDialogTitle>
-              <h2 className="pt-6 pb-5 text-headline-2 text-center text-brown-600 leading-10">
+              <h2 className="pt-6 pb-2 text-headline-2 text-center text-brown-600 leading-10">
                 Create an account to continue
               </h2>
             </AlertDialogTitle>
@@ -37,16 +37,17 @@ export function CreateAccountAlert({
 
           <div className="pb-5">
             <Link to="/">
-              <AlertDialogAction className="rounded-full px-10 py-6 text-body-1 text-white">
-                Create account
-              </AlertDialogAction>
+              <Button variant="primary">Create account</Button>
             </Link>
           </div>
 
           <div className="pb-3 text-body-1 text-brown-400">
             <p>
               Already have an account?{" "}
-              <Link to="/" className="underline text-brown-600">
+              <Link
+                to="/"
+                className="underline text-brown-600 hover:text-brown-400"
+              >
                 Log in
               </Link>
             </p>

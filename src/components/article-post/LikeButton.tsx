@@ -2,6 +2,7 @@ import { Smile } from "lucide-react";
 import { useLike } from "@/hooks/useLike";
 import { CreateAccountAlert } from "../ui/create-account-dialog";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 
 type LikeButtonProps = {
   like: number;
@@ -11,8 +12,6 @@ type LikeButtonProps = {
 export function LikeButton({ like, isLoggedIn = false }: LikeButtonProps) {
   const { count, handleLike } = useLike(like);
   const [open, setOpen] = useState(false);
-
-  const buttonStyle = "bg-brown-100 p-3 rounded-full border border-brown-500";
 
   const onClick = () => {
     if (!isLoggedIn) {
@@ -25,13 +24,10 @@ export function LikeButton({ like, isLoggedIn = false }: LikeButtonProps) {
 
   return (
     <>
-      <button
-        onClick={onClick}
-        className={`${buttonStyle} flex items-center justify-center gap-2 px-10`}
-      >
+      <Button variant="outline" className="gap-1 " onClick={onClick}>
         <Smile className="w-5 h-5" />
-        <span className="text-body-1 text-brown-600">{count}</span>
-      </button>
+        {count}
+      </Button>
       <CreateAccountAlert open={open} onOpenChange={setOpen} />
     </>
   );
