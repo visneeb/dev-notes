@@ -69,7 +69,7 @@ export function useBlogPosts() {
   }, [applyFilters]);
 
   /*id fetch*/
-  const getPostById = async (id: number | string) => {
+  const getPostById = useCallback(async (id: number | string) => {
     try {
       setLoading(true);
 
@@ -83,7 +83,7 @@ export function useBlogPosts() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const getTitleSuggestions = useCallback(
     (keyword: string): Post[] => {
@@ -100,7 +100,7 @@ export function useBlogPosts() {
 
   return {
     posts,
-    post, 
+    post,
     loading,
     getAllPosts,
     searchPosts,

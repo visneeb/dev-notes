@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
+import type { Post } from "@/hooks/useBlogPosts";
 
-export function BlogCard(props: any) {
+type BlogCardProps = Pick<Post, "id" | "image" | "category" | "title" | "description" | "author"> & {
+  date: string;
+};
+
+export function BlogCard(props: BlogCardProps) {
   return (
     <div className="flex flex-col gap-4">
       <Link

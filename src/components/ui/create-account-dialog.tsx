@@ -36,7 +36,7 @@ export function CreateAccountAlert({
           </AlertDialogHeader>
 
           <div className="pb-5">
-            <Link to="/">
+            <Link to="/signup">
               <Button variant="primary">Create account</Button>
             </Link>
           </div>

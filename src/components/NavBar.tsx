@@ -1,6 +1,6 @@
 import { Dropdown } from "./ui/nav-dropdown";
 import { Button } from "./ui/button";
-import { AuthButton } from "./ui/styled-button";
+
 import { Link } from "react-router-dom";
 
 export function NavBar() {
@@ -16,9 +16,11 @@ export function NavBar() {
 
         {/* Desktop menu */}
         <div className="hidden md:flex gap-2 pr-2 md:pr-[7vw]">
-          <Button variant="outline" >Log in</Button>
+          <Link to="/login">
+            <Button variant="outline">Log in</Button>
+          </Link>
           <Link to="/signup">
-            <AuthButton variant="primary">Sign up</AuthButton>
+            <Button variant="primary">Sign up</Button>
           </Link>
         </div>
       </div>
