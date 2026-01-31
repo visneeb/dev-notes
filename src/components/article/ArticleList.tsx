@@ -1,9 +1,10 @@
 import { BlogCard } from "../ui/blog-card";
 import { formatDate } from "@/lib/formatDate";
 import { Loading } from "../ui/loading";
+import type { Post } from "@/hooks/useBlogPosts";
 
 type Props = {
-  posts: any[];
+  posts: Post[];
   loading: boolean;
   visible: number;
 };

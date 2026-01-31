@@ -1,4 +1,3 @@
-
 import { HeroSection } from "@/components/landing/HeroSection";
 import { ArticleSection } from "@/components/landing/ArticleSection";
 

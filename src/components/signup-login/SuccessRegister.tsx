@@ -2,7 +2,7 @@ import { Button } from "../ui/button";
 import { Check } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-export function SuccessRigis() {
+export function SuccessRegister() {
   const navigate = useNavigate();
   const handleOnclick = () => {
     navigate("/");

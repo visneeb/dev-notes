@@ -16,7 +16,7 @@ export function ArticlePostPage() {
 
   useEffect(() => {
     if (id) getPostById(id);
-  }, [id]);
+  }, [id, getPostById]);
 
   if (loading) {
     return <Loading />;
@@ -25,8 +25,8 @@ export function ArticlePostPage() {
   if (!post) return <NotFoundPage />;
 
   return (
-    <article className="w-full ">
-      <div className="mx-auto max-w-291.25  md:px-4 px-0">
+    <article className="w-full">
+      <div className="mx-auto max-w-291.25 md:px-4 px-0">
         {/* image */}
         <div className="aspect-1200/587 overflow-hidden pb-6 md:pb-12 md:pt-15">
           {post.image && (
@@ -37,10 +37,10 @@ export function ArticlePostPage() {
             />
           )}
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_310px] gap-12 lg:gap-20 ">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_310px] gap-12 lg:gap-20">
           {/* Article content  */}
           <div className="flex flex-col">
-            <div className=" text-gray-500 mb-8 flex gap-5 items-center px-4 md:px-0">
+            <div className="text-gray-500 mb-8 flex gap-5 items-center px-4 md:px-0">
               <span className="text-brand-green text-body-2 bg-green-100 p-1 px-3 rounded-full">
                 {post.category}
               </span>{" "}
@@ -69,7 +69,7 @@ export function ArticlePostPage() {
           </div>
 
           {/* Sidebar */}
-          <aside className="hidden lg:block w-full sticky top-11 self-start ">
+          <aside className="hidden lg:block w-full sticky top-11 self-start">
             <AuthorCard />
           </aside>
         </div>

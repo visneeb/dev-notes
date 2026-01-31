@@ -1,7 +1,6 @@
-
-import HomePage from "../pages/HomePage.tsx";
-import ArticlePage from "../pages/ArticlePage.tsx";
-import { Layout } from "../components/Layout.tsx";
+import HomePage from "../pages/HomePage";
+import ArticlePage from "../pages/ArticlePage";
+import { Layout } from "../components/Layout";
 
 export const publicRoutes = [
   {

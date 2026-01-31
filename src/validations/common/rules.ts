@@ -1,11 +1,8 @@
-export function isValidEmail(email: string) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
+export const emailRule = () => (value: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) ? null : "Email must be valid email";
 
-export function hasMinLength(value: string, length: number) {
-  return value.length >= length;
-}
+export const minLength = (len: number) => (value: string) =>
+  value.length >= len ? null : `must be at least ${len} characters`;
 
-export function hasNumber(value: string) {
-  return /\d/.test(value);
-}
+export const hasNumber = () => (value: string) =>
+  /\d/.test(value) ? null : "Must contain a number";
