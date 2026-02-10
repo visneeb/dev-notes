@@ -42,7 +42,7 @@ export function ArticlePostPage() {
           <div className="flex flex-col">
             <div className="text-gray-500 mb-8 flex gap-5 items-center px-4 md:px-0">
               <span className="text-brand-green text-body-2 bg-green-100 p-1 px-3 rounded-full">
-                {post.category}
+                {post.category_name}
               </span>{" "}
               <span className="text-body-1 p-1">{formatDate(post.date)}</span>
             </div>

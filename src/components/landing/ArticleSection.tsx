@@ -1,32 +1,44 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useBlogPosts } from "../../hooks/useBlogPosts";
+import { useCategories } from "@/hooks/useCategories";
 import { usePagination } from "@/hooks/usePagination";
 import { ArticleFilter } from "../article/ArticleFilter";
 import { ArticleList } from "../article/ArticleList";
 import { LoadMoreButton } from "../article/LoadMoreButton";
 import type { Post } from "@/hooks/useBlogPosts";
+import type { CategoryOption } from "@/components/ui/article-category";
 
 export function ArticleSection() {
   const {
     posts,
     loading,
-    getAllPosts,
+    keyword,
     searchPosts,
     filterByCategory,
     getTitleSuggestions,
   } = useBlogPosts();
+  const { categories } = useCategories();
   const { visible, paginate, reset } = usePagination(6);
   const [selectedCategory, setSelectedCategory] = useState("Highlight");
   const [suggestions, setSuggestions] = useState<Post[]>([]);
 
-  useEffect(() => {
-    getAllPosts();
-  }, [getAllPosts]);
+  const categoryOptions: CategoryOption[] = useMemo(
+    () => [{ id: null, name: "Highlight" }, ...categories.map((c) => ({ id: c.id, name: c.name }))],
+    [categories],
+  );
 
-  const handleCategoryChange = (value: string) => {
-    setSelectedCategory(value);
+  useEffect(() => {
+    if (keyword) {
+      setSuggestions(getTitleSuggestions(keyword));
+    } else {
+      setSuggestions([]);
+    }
+  }, [posts, keyword, getTitleSuggestions]);
+
+  const handleCategoryChange = (categoryId: number | null, categoryName: string) => {
+    setSelectedCategory(categoryName);
     reset();
-    filterByCategory(value);
+    filterByCategory(categoryId);
   };
 
   const handleSearch = (keyword: string) => {
@@ -46,6 +58,7 @@ export function ArticleSection() {
 
       <ArticleFilter
         selectedCategory={selectedCategory}
+        categories={categoryOptions}
         onCategoryChange={handleCategoryChange}
         onSearch={handleSearch}
         suggestions={suggestions}

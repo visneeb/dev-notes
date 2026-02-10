@@ -11,21 +11,23 @@ type Post = {
   content: string;
 };
 
-type FilterOptions = {
+interface FilterOptions {
   categoryId: number | null;
   keyword: string;
-};
+}
 
 export function filterPosts(
   posts: Post[],
   { categoryId, keyword }: FilterOptions,
-): Post[] {
+) {
   return posts.filter((post) => {
     const matchCategory =
       categoryId === null || post.category_id === categoryId;
 
     const matchKeyword =
-      !keyword || post.title.toLowerCase().includes(keyword.toLowerCase());
+      !keyword ||
+      post.title.toLowerCase().includes(keyword.toLowerCase()) ||
+      post.description.toLowerCase().includes(keyword.toLowerCase());
 
     return matchCategory && matchKeyword;
   });
