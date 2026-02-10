@@ -1,29 +1,32 @@
-import type { Post } from "@/hooks/useBlogPosts";
+type Post = {
+  id: number;
+  image: string;
+  category_id: number;
+  category_name: string;
+  title: string;
+  description: string;
+  author: string;
+  date: string;
+  likes: number;
+  content: string;
+};
 
 type FilterOptions = {
-  category: string;
+  categoryId: number | null;
   keyword: string;
 };
 
 export function filterPosts(
   posts: Post[],
-  { category, keyword }: FilterOptions,
+  { categoryId, keyword }: FilterOptions,
 ): Post[] {
-  let result = posts;
+  return posts.filter((post) => {
+    const matchCategory =
+      categoryId === null || post.category_id === categoryId;
 
-  if (category !== "All") {
-    result = result.filter((post) => post.category === category);
-  }
+    const matchKeyword =
+      !keyword || post.title.toLowerCase().includes(keyword.toLowerCase());
 
-  if (keyword.trim()) {
-    const lower = keyword.toLowerCase();
-    result = result.filter(
-      (post) =>
-        post.title.toLowerCase().includes(lower) ||
-        post.description.toLowerCase().includes(lower) ||
-        post.content.toLowerCase().includes(lower),
-    );
-  }
-
-  return result;
+    return matchCategory && matchKeyword;
+  });
 }

@@ -1,11 +1,12 @@
 import { useState, useCallback, useEffect } from "react";
-import axios from "axios";
 import { filterPosts } from "@/lib/filterPosts";
+import { api } from "@/utils/axios";
 
 export type Post = {
   id: number;
   image: string;
-  category: string;
+  category_id: number;
+  category_name: string;
   title: string;
   description: string;
   author: string;
@@ -13,6 +14,7 @@ export type Post = {
   likes: number;
   content: string;
 };
+
 
 export function useBlogPosts() {
   /*state */
@@ -22,7 +24,7 @@ export function useBlogPosts() {
   const [loading, setLoading] = useState(false);
 
   /*state for filter / search*/
-  const [activeCategory, setActiveCategory] = useState<string>("All");
+  const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
   const [keyword, setKeyword] = useState<string>("");
 
   /*all posts*/
@@ -30,12 +32,9 @@ export function useBlogPosts() {
     try {
       setLoading(true);
 
-      const res = await axios.get<{ posts: Post[] }>(
-        "https://blog-post-project-api.vercel.app/posts",
-      );
+      const res = await api.get<{ data: Post[] }>("/posts");
 
-      setAllPosts(res.data.posts);
-      setPosts(res.data.posts);
+      setAllPosts(res.data.data);
     } catch (error) {
       console.error("Failed to fetch posts:", error);
     } finally {
@@ -45,13 +44,17 @@ export function useBlogPosts() {
 
   /*logic for filter*/
   const applyFilters = useCallback(() => {
+    if (!allPosts.length) {
+      setPosts([]);
+      return;
+    }
     setPosts(
       filterPosts(allPosts, {
-        category: activeCategory,
+        categoryId: activeCategoryId,
         keyword,
       }),
     );
-  }, [allPosts, activeCategory, keyword]);
+  }, [allPosts, activeCategoryId, keyword]);
 
   /*search */
   const searchPosts = useCallback((value: string) => {
@@ -59,8 +62,8 @@ export function useBlogPosts() {
   }, []);
 
   /* category filter*/
-  const filterByCategory = useCallback((category: string) => {
-    setActiveCategory(category);
+  const filterByCategory = useCallback((categoryId: number | null) => {
+    setActiveCategoryId(categoryId);
   }, []);
 
   /* call applyFilters when state change */
@@ -73,11 +76,8 @@ export function useBlogPosts() {
     try {
       setLoading(true);
 
-      const res = await axios.get<Post>(
-        `https://blog-post-project-api.vercel.app/posts/${id}`,
-      );
-
-      setPost(res.data);
+      const res = await api.get<{ data: Post }>(`/posts/${id}`);
+      setPost(res.data.data);
     } catch (error) {
       console.error("Failed to fetch post:", error);
     } finally {
