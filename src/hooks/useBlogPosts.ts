@@ -1,11 +1,11 @@
 import { useState, useCallback, useEffect } from "react";
-import axios from "axios";
-import { filterPosts } from "@/lib/filterPosts";
+import { api } from "@/utils/axios";
 
 export type Post = {
   id: number;
   image: string;
-  category: string;
+  category_id: number;
+  category_name: string;
   title: string;
   description: string;
   author: string;
@@ -15,69 +15,68 @@ export type Post = {
 };
 
 export function useBlogPosts() {
-  /*state */
-  const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(false);
 
-  /*state for filter / search*/
-  const [activeCategory, setActiveCategory] = useState<string>("All");
-  const [keyword, setKeyword] = useState<string>("");
+  const [activeCategoryId, setActiveCategoryId] = useState<number | null>(null);
+  const [keyword, setKeyword] = useState("");
 
-  /*all posts*/
-  const getAllPosts = useCallback(async () => {
-    try {
-      setLoading(true);
+  //fetch posts with filters
+  const fetchPosts = useCallback(
+    async (categoryId?: number | null, searchKeyword?: string) => {
+      try {
+        setLoading(true);
+        const params = new URLSearchParams();
 
-      const res = await axios.get<{ posts: Post[] }>(
-        "https://blog-post-project-api.vercel.app/posts",
-      );
+        if (categoryId != null && categoryId !== undefined) {
+          params.set("category_id", String(categoryId));
+        }
+        if (searchKeyword?.trim()) {
+          params.set("keyword", searchKeyword.trim());
+        }
 
-      setAllPosts(res.data.posts);
-      setPosts(res.data.posts);
-    } catch (error) {
-      console.error("Failed to fetch posts:", error);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+        const queryString = params.toString();
+        const url = queryString ? `/posts?${queryString}` : "/posts";
+        const res = await api.get<{ data: Post[] }>(url);
 
-  /*logic for filter*/
-  const applyFilters = useCallback(() => {
-    setPosts(
-      filterPosts(allPosts, {
-        category: activeCategory,
-        keyword,
-      }),
-    );
-  }, [allPosts, activeCategory, keyword]);
+        setPosts(res.data.data ?? []);
+      } catch (error) {
+        console.error("Failed to fetch posts:", error);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [],
+  );
 
-  /*search */
+  //re-fetch when filters change
+  useEffect(() => {
+    fetchPosts(activeCategoryId, keyword);
+  }, [activeCategoryId, keyword, fetchPosts]);
+
+  // actions
+  const getAllPosts = useCallback(() => {
+    fetchPosts(activeCategoryId, keyword);
+  }, [fetchPosts, activeCategoryId, keyword]);
+
   const searchPosts = useCallback((value: string) => {
     setKeyword(value);
   }, []);
 
-  /* category filter*/
-  const filterByCategory = useCallback((category: string) => {
-    setActiveCategory(category);
+  const filterByCategory = useCallback((categoryId: number | null) => {
+    setActiveCategoryId(categoryId);
   }, []);
 
-  /* call applyFilters when state change */
-  useEffect(() => {
-    applyFilters();
-  }, [applyFilters]);
-
-  /*id fetch*/
+  // fetch by id
   const getPostById = useCallback(async (id: number | string) => {
     try {
       setLoading(true);
-
-      const res = await axios.get<Post>(
-        `https://blog-post-project-api.vercel.app/posts/${id}`,
-      );
-
-      setPost(res.data);
+      const res = await api.get<{ data: Post[] }>(`/posts/${id}`);
+      const postData = Array.isArray(res.data.data)
+        ? res.data.data[0]
+        : res.data.data;
+      setPost(postData ?? null);
     } catch (error) {
       console.error("Failed to fetch post:", error);
     } finally {
@@ -85,23 +84,24 @@ export function useBlogPosts() {
     }
   }, []);
 
+  // title suggestions (from current posts)
   const getTitleSuggestions = useCallback(
-    (keyword: string): Post[] => {
-      if (!keyword.trim()) return [];
+    (searchKeyword: string): Post[] => {
+      if (!searchKeyword.trim()) return [];
 
-      const lower = keyword.toLowerCase();
-
-      return allPosts
-        .filter((post) => post.title.toLowerCase().includes(lower))
+      const lower = searchKeyword.toLowerCase();
+      return posts
+        .filter((p) => p.title.toLowerCase().includes(lower))
         .slice(0, 5);
     },
-    [allPosts],
+    [posts],
   );
 
   return {
     posts,
     post,
     loading,
+    keyword,
     getAllPosts,
     searchPosts,
     filterByCategory,

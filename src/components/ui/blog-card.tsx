@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import type { Post } from "@/hooks/useBlogPosts";
 
-type BlogCardProps = Pick<Post, "id" | "image" | "category" | "title" | "description" | "author"> & {
+type BlogCardProps = Pick<
+  Post,
+  "id" | "image" | "category_name" | "title" | "description" | "author"
+> & {
   date: string;
 };
 
@@ -22,7 +25,7 @@ export function BlogCard(props: BlogCardProps) {
       <div className="flex flex-col">
         <div className="flex">
           <span className="bg-green-200 rounded-full px-3 py-1 text-sm font-semibold text-green-600 mb-2">
-            {props.category}
+            {props.category_name}
           </span>
         </div>
         <Link key={props.id} to={`/post/${props.id}`}>

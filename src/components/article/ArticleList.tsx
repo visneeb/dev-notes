@@ -20,7 +20,7 @@ export function ArticleList({ posts, loading, visible }: Props) {
           .map((post) => (
             <BlogCard
               image={post.image}
-              category={post.category}
+              category_name={post.category_name}
               title={post.title}
               description={post.description}
               author={post.author}

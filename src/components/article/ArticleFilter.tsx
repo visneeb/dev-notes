@@ -2,12 +2,14 @@ import { SearchBar } from "../ui/search-bar";
 import {
   ArticleCategorySelect,
   ArticleButtonGroup,
+  type CategoryOption,
 } from "../ui/article-category";
 import type { Post } from "@/hooks/useBlogPosts";
 
 type Props = {
   selectedCategory: string;
-  onCategoryChange: (value: string) => void;
+  categories: CategoryOption[];
+  onCategoryChange: (categoryId: number | null, categoryName: string) => void;
   onSearch: (keyword: string) => void;
   suggestions: Post[];
   onSelectSuggestion: (title: string) => void;
@@ -15,6 +17,7 @@ type Props = {
 
 export function ArticleFilter({
   selectedCategory,
+  categories,
   onCategoryChange,
   onSearch,
   suggestions,
@@ -32,12 +35,14 @@ export function ArticleFilter({
       <ArticleCategorySelect
         className="md:hidden"
         value={selectedCategory}
+        categories={categories}
         onChange={onCategoryChange}
       />
 
       <ArticleButtonGroup
         className="hidden md:flex md:pl-2"
         activeCategory={selectedCategory}
+        categories={categories}
         onSelectCategory={onCategoryChange}
       />
     </div>

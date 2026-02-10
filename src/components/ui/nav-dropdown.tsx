@@ -13,7 +13,7 @@ export function Dropdown() {
   const [open, setOpen] = useState(false);
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <button
           type="button"
           className="pr-3 md:hidden"
