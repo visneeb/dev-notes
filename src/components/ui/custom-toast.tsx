@@ -1,28 +1,55 @@
 import { toast } from "sonner";
 import { X } from "lucide-react";
+
 const isMobile = () => window.innerWidth < 768;
 
-export const showCustomToast = () => {
-  {
-    (toast.custom((t) => (
-      <div className="bg-[#00C666] text-white p-4 px-5 w-full max-w-sm md:w-100 rounded-2xl font-sans mx-auto">
-        <div className="flex flex-row justify-between pb-2 ">
-          <h3 className="text-headline-4">Copied!</h3>
+type ToastVariant = "success" | "error";
+
+const variantStyles: Record<ToastVariant, string> = {
+  success: "bg-brand-green text-white",
+  error: "bg-brand-red text-white",
+};
+
+type CustomToastProps = {
+  title: string;
+  description?: string;
+  variant?: ToastVariant;
+  extraClass?: string;
+};
+
+export const showCustomToast = ({
+  title,
+  description,
+  variant = "success",
+  extraClass = "",
+}: CustomToastProps) => {
+  toast.custom(
+    (t) => (
+      <div
+        className={`
+          ${variantStyles[variant]}
+          p-4 px-5 
+          rounded-2xl font-sans  ${extraClass}
+        `}
+      >
+        <div className="flex justify-between items-start gap-4 pb-2">
+          <h3 className="text-headline-4 md:whitespace-nowrap md:pr-30">
+            {title}
+          </h3>
           <button onClick={() => toast.dismiss(t)}>
             <X size={20} strokeWidth={2} />
           </button>
         </div>
-        <p className="text-body-2">
-          This article has been copied to your clipboard
-        </p>
-      </div>
-    )),
-      { position: isMobile() ? "bottom-center" : "bottom-right" });
-  }
-};
 
-export const showCustomToastError = () => {
-  toast.error("Failed to copy link", {
-    position: isMobile() ? "bottom-center" : "bottom-right",
-  });
+        {description && (
+          <p className="text-body-2 md:whitespace-nowrap md:pr-10">
+            {description}
+          </p>
+        )}
+      </div>
+    ),
+    {
+      position: isMobile() ? "bottom-center" : "bottom-right",
+    },
+  );
 };

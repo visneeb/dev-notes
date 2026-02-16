@@ -5,6 +5,7 @@ type AuthFieldProps = {
   label: string;
   type?: string;
   autoComplete?: string;
+  error?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export function AuthField({

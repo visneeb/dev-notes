@@ -1,5 +1,5 @@
 import { Facebook, Linkedin, Twitter, Copy } from "lucide-react";
-import { showCustomToastError, showCustomToast } from "../ui/custom-toast";
+import { showCustomToast } from "../ui/custom-toast";
 import { Button } from "@/components/ui/button";
 
 type ShareButtonsProps = {
@@ -13,9 +13,17 @@ export default function ShareButtons({ url }: ShareButtonsProps) {
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(shareUrl);
-      showCustomToast();
+      showCustomToast({
+        title: "Copied!",
+        description: "This article has been copied to your clipboard",
+        variant: "success",
+      });
     } catch {
-      showCustomToastError();
+      showCustomToast({
+        title: "Failed!",
+        description: "Unable to copy link",
+        variant: "error",
+      });
     }
   };
 
