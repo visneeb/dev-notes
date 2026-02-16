@@ -8,6 +8,7 @@ import {
   type SignUpData,
 } from "@/validations/schemas/signup.schema";
 import { formDataToSignUpData } from "@/validations/mappers/signup.mapper";
+import { register } from "@/services/auth.service";
 
 export function SignUpForm() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export function SignUpForm() {
     Partial<Record<keyof SignUpData, string>>
   >({});
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const values = formDataToSignUpData(formData);
@@ -29,7 +30,15 @@ export function SignUpForm() {
       return;
     }
     setErrors({});
-    navigate("/signup/success");
+
+    try {
+      await register(values);
+      navigate("/signup/success");
+    } catch (error: any) {
+      const message = error.response?.data?.error || "Something went wrong";
+
+      setErrors({ email: message });
+    }
   };
 
   return (
