@@ -13,6 +13,7 @@ export function AuthField({
   label,
   type = "text",
   autoComplete,
+  error,
   ...props
 }: AuthFieldProps) {
   return (
@@ -26,7 +27,11 @@ export function AuthField({
         name={id}
         type={type}
         autoComplete={autoComplete}
-        className="bg-white border border-brown-300 h-12 text-body-2"
+        className={`bg-white h-12 text-body-2 border ${
+          error
+            ? "border-red-500 "
+            : "border-brown-300"
+        }`}
         {...props}
       />
     </div>
