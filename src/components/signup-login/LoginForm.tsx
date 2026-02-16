@@ -6,13 +6,20 @@ import { type LogInData } from "@/validations/schemas/login.schema";
 import { login } from "@/services/auth.service";
 import { showCustomToast } from "../ui/custom-toast";
 import { getErrorMessage } from "@/utils/getErrorMessage";
+import { useState } from "react";
 
 export function LoginForm() {
   const navigate = useNavigate();
   const { login: setAuth } = useAuth();
 
+  const [errors, setErrors] = useState<{
+    email?: string;
+    password?: string;
+  }>({});
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setErrors({});
 
     const formData = new FormData(e.currentTarget);
 
@@ -28,14 +35,28 @@ export function LoginForm() {
 
       navigate("/");
     } catch (error: any) {
-      const message = getErrorMessage(error, "Login failed");
-      console.log("MESSAGE:", message);
+      const status = error?.response?.status;
+      const message = getErrorMessage(error);
 
-      showCustomToast({
-        title: message,
-        description: "Please try another password or email",
-        variant: "error",
-      });
+      if (status === 401 && message) {
+        setErrors({
+          email: "error",
+          password: "error",
+        });
+
+        showCustomToast({
+          title: message,
+          description: "Please try another password or email",
+          variant: "error",
+        });
+      }
+
+      if (status === 400) {
+        setErrors({
+          email: "error",
+          password: "error",
+        });
+      }
     }
   };
 
@@ -53,6 +74,7 @@ export function LoginForm() {
             label="Email"
             autoComplete="email"
             placeholder="Email"
+            error={errors.email}
           />
 
           <AuthField
@@ -62,8 +84,10 @@ export function LoginForm() {
             autoComplete="password"
             placeholder="Password"
             type="password"
+            error={errors.password}
           />
         </div>
+
         <div className="flex  justify-center">
           <Button variant="primary" type="submit">
             Log in
